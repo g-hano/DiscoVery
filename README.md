@@ -5,6 +5,7 @@
 ## Introduction
 This project introduces an advanced Language Model (LLM) agent designed to understand and analyze company data, inspired by the capabilities seen in IBM's discovery solutions. It can read a variety of file formats and utilizes state-of-the-art local and cloud-based LLMs for data processing and analysis.
 
+![DiscoVery Chart](charts/big.png)
 ## Features
 - **Supported File Types:** Handles various file types including CSV, TXT, Excel, PDF, Python scripts, Jupyter notebooks, and Markdown files.
 - **Data Extraction:** Capable of extracting text and images from PDFs, utilizing the Llava multimodal LLM for interpreting images, graphs, and charts.
@@ -80,10 +81,6 @@ Observation:  The image you've provided is a screenshot of an analytics dashboar
 It includes key performance indicators (KPIs) and financial metrics that can be usess the company's financial performance or market position.
 
 ```
-
-## Contributing
-Contributions to this project are welcome! Please fork the repository, make your changes, and submit a pull request.
-
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
 ---
