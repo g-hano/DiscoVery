@@ -1,0 +1,13 @@
+Product Name,Month,Customer Type,Region,Quantity Sold,Unit Price,Total Revenue
+MediConnect Licenses,January,Healthcare,North America,125,1200,150000
+MediConnect Licenses,February,Healthcare,Europe,100,1200,120000
+EduSuite Licenses,January,Education,Asia,300,800,240000
+EduSuite Licenses,February,Education,North America,250,800,200000
+Custom Software Solutions,January,Corporate,Europe,5,15000,75000
+Custom Software Solutions,February,Corporate,Asia,4,15000,60000
+AI Integration Modules,January,Healthcare,Europe,25,5000,125000
+AI Integration Modules,February,Healthcare,North America,20,5000,100000
+Cloud Storage Expansion,January,Corporate,Asia,100,300,30000
+Cloud Storage Expansion,February,Corporate,North America,120,300,36000
+Support and Maintenance Packages,January,All,North America,200,500,100000
+Support and Maintenance Packages,February,All,Europe,150,500,75000
