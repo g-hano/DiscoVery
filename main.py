@@ -2,12 +2,17 @@ from llama_index.core.agent import ReActAgent
 from llama_index.core.tools import FunctionTool
 from llama_index.core.memory import ChatMemoryBuffer
 
-from llama_index.llms.anthropic import Anthropic
 from tools import PDFExtractor, AskVisionModel, StructuredFileReader, Report
+
+from llama_index.llms.anthropic import Anthropic
+from llama_index.llms.ollama import Ollama
+from llama_index.llms.openai import OpenAI
 
 CLAUDE_API_KEY="<ANTROPIC-API-KEY>"
 llm = Anthropic(model="claude-3-opus-20240229", # you can change the model
                 api_key=CLAUDE_API_KEY)
+OPENAI_API_KEY="<OPENAI_API_KEY>"
+#llm = OpenAI(model="gpt-4", api_key=OPENAI_API_KEY)
 
 #llm = Ollama(model="llama3", request_timeout=360)
 
@@ -28,17 +33,24 @@ report_tool = FunctionTool.from_defaults(fn=Report,
                                          name="Report", 
                                          description="""Useful when you are done with analysis and want to save the final version of the report.""")
 
-with open("claude_prompt.txt", "r") as f:
+with open("prompts/claude_prompt.txt", "r") as f:
     prompt = f.readlines()
 
 agent = ReActAgent.from_tools(llm=llm,
-                               max_iterations = 20,
+                               max_iterations=20,
                                tools=[pdf_tool, askvision_tool, directory_tool, report_tool],
                                verbose=True,
                                memory=ChatMemoryBuffer.from_defaults(llm=llm),
                                chat_history=[
                                    {"role":"system", "content": prompt}])
 
-#text = "I want you to read files provided and create a complete analysis of my company's stats"
+#text = "I want you to read files provided and create a complete analysis of my company's stats."
 text = input("Ask: ")
 print(agent.chat(text))
+
+
+# Optional: saving Agent's memory to a file
+#memory_path = "memory.txt"
+#with open(memory_path, "w") as file:
+#    file.write(str(agent.memory.to_string())) 
+#print(f"Memory saved to {memory_path}")
