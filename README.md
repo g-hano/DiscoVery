@@ -36,8 +36,8 @@ askvision_tool = FunctionTool.from_defaults(fn=AskVisionModel)
 directory_tool = FunctionTool.from_defaults(fn=StructuredFileReader)
 report_tool = FunctionTool.from_defaults(fn=Report)
 
-with open("claude_prompt.txt", "r") as f:
-    prompt = f.readlines()
+with open("prompts/claude_prompt.txt", "r") as f:
+    prompt = f.read()
 
 agent = ReActAgent.from_tools(llm=llm,
                                tools=[pdf_tool, askvision_tool, directory_tool, report_tool],
