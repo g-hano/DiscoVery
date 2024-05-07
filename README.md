@@ -20,6 +20,7 @@ git clone https://github.com/g-hano/DiscoVery
 ```
 Install necessary libraries using the provided `requirements.txt` file:
 ```bash
+cd DiscoVery
 pip install -r requirements.txt
 ```
 
