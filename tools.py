@@ -5,8 +5,10 @@ from llama_index.embeddings.ollama import OllamaEmbedding
 import logging
 
 from PIL import Image
-import ollama
+import base64
 from io import BytesIO
+
+import ollama
 
 DIRNAME = "Extracted"
 def PDFExtractor(path: str) -> dict:
@@ -45,31 +47,25 @@ def PDFExtractor(path: str) -> dict:
     return pairs
 
 
-def AskVisionModel(content) -> str:
-    def read_images_from_folder_as_bytes(folder_path='Extracted'):
+def AskVisionModel(question: str) -> str:
+    def read_bytes(folder_path='Extracted'):
         images_bytes = []
         supported_formats = ('.png', '.jpg', '.jpeg', '.bmp', '.gif')
-        if not os.path.exists(folder_path):
-            print(f"Error: Directory {folder_path} does not exist.")
-            return images_bytes
         for filename in os.listdir(folder_path):
             if filename.lower().endswith(supported_formats):
                 img_path = os.path.join(folder_path, filename)
-                try:
-                    with Image.open(img_path) as img:
-                        byte_arr = BytesIO()
-                        img.save(byte_arr, format=img.format)
-                        images_bytes.append(byte_arr.getvalue())
-                        print(f"Loaded image as bytes: {img_path}")
-                except IOError as e:
-                    print(f"Failed to load image {img_path}: {e}")
+                with Image.open(img_path) as img:
+                    byte_arr = BytesIO()
+                    img.save(byte_arr, format='JPEG')
+                    encoded_image = base64.b64encode(byte_arr.getvalue()).decode('utf-8')# Encode as base64
+                    images_bytes.append(encoded_image)
         return images_bytes
 
     print(f"====== AskVisionModel used ======")
-    images = read_images_from_folder_as_bytes()
+    images = read_bytes()
 
-    with open("llava_prompt.txt", "r") as f:
-        prompt = f.readlines()
+    with open("prompts\llava_prompt.txt", "r") as f:
+        prompt = f.read()
 
     response = ollama.chat(
         model="llava",
@@ -80,12 +76,11 @@ def AskVisionModel(content) -> str:
             },
             {
                 "role": "user",
-                "content": content,
+                "content": question,
                 "images": images
             }
         ]
     )
-    
     return response["message"]["content"] 
 
 
